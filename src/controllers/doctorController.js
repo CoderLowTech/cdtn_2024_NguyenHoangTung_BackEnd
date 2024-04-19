@@ -146,6 +146,18 @@ let sendReceipt = async (req, res) => {
     }
 }
 
+let getHistoryBookings = async (req, res) => {
+    try {
+        let infor = await doctorService.getHistoryBookings(req.query.doctorId, req.query.date);
+        return res.status(200).json(infor)
+    } catch (error) {
+        return res.status(200).json({
+            errorCode: -1,
+            errorMessage: 'Error from server...'
+        })
+    }
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -156,5 +168,6 @@ module.exports = {
     getExtraDoctorInforById: getExtraDoctorInforById,
     getProfileDoctorById: getProfileDoctorById,
     getListBookings: getListBookings,
-    sendReceipt: sendReceipt
+    sendReceipt: sendReceipt,
+    getHistoryBookings: getHistoryBookings
 }
