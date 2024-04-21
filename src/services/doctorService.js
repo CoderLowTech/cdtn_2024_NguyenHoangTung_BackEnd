@@ -396,7 +396,20 @@ let getListBookings = (doctorId, date) => {
                                 { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] }
                             ]
                         },
-                        { model: db.Allcode, as: 'timeData', attributes: ['valueEn', 'valueVi'] }
+                        { model: db.Allcode, as: 'timeData', attributes: ['valueEn', 'valueVi'] },
+                        {
+                            model: db.Doctor_Infor, as: 'bookingDoctorData',
+                            include: [
+                                { model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
+                                {
+                                    model: db.User,
+                                    attributes: {
+                                        exclude: ['id', 'email', 'address', 'password', 'phoneNumber', 'gender', 'roleId', 'positionId', 'image', 'createdAt', 'updatedAt']
+                                    }
+                                }
+                            ]
+                        }
                     ],
                     raw: false,
                     nest: true

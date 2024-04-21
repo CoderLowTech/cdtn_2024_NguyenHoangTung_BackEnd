@@ -1,5 +1,6 @@
 require('dotenv').config();
 import nodemailer from 'nodemailer';
+import moment from 'moment';
 
 let sendSimpleEmail = async (sendData) => {
     return new Promise(async (resolve, reject) => {
@@ -93,7 +94,14 @@ let sendReceiptEmail = async (sendData) => {
     })
 }
 
+
 let getReceiptBodyEmailHTML = (sendData) => {
+    let timeVn = sendData.time.valueVi;
+    let timeEn = sendData.time.valueEn;
+    let dateVn = moment.unix(+sendData.date / 1000).locale('vi').format('dddd - DD/MM/YYYY');
+    let dateEn = moment.unix(+sendData.date / 1000).locale('en').format('ddd - MM/DD/YYYY');
+    let priceVn = sendData.price.valueVi;
+    let priceEn = sendData.price.valueEn;
     let result = '';
     if (sendData.language === 'vi') {
         result =
@@ -101,6 +109,9 @@ let getReceiptBodyEmailHTML = (sendData) => {
             <h3>Xin chào ${sendData.patientName}</h3>
             <p>Bạn nhận được email này vì đã khám bệnh tại phòng khám của chúng tôi.</p>
             <p>Thông tin hóa đơn</p>
+            <p>Bác sĩ: <strong>${sendData.doctorLastName} ${sendData.doctorFirstName}</strong></p>
+            <p>Thời gian: <strong>${timeVn} - ${dateVn}</strong></p>
+            <p>Phí khám bệnh: <strong>${priceVn} VNĐ</strong></p>
             <div>Xin chân thành cảm ơn</div>
         `
     }
@@ -110,6 +121,9 @@ let getReceiptBodyEmailHTML = (sendData) => {
             <h3>Dear ${sendData.patientName}</h3>
             <p>You are receiving this email because you were examined at our clinic.</p>
             <p>Receipt information</p>
+            <p>Doctor: <strong>${sendData.doctorFirstName} ${sendData.doctorLastName}</strong></p>
+            <p>Time: <strong>${timeEn} - ${dateEn}</strong></p>
+            <p>Phí khám bệnh: <strong>${priceEn} USD</strong></p>
             <div>Sincerely thank</div>
         `
     }
