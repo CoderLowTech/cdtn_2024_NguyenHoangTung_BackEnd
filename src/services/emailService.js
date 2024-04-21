@@ -123,7 +123,7 @@ let getReceiptBodyEmailHTML = (sendData) => {
             <p>Receipt information</p>
             <p>Doctor: <strong>${sendData.doctorFirstName} ${sendData.doctorLastName}</strong></p>
             <p>Time: <strong>${timeEn} - ${dateEn}</strong></p>
-            <p>Phí khám bệnh: <strong>${priceEn} USD</strong></p>
+            <p>Examination fee: <strong>${priceEn} USD</strong></p>
             <div>Sincerely thank</div>
         `
     }
